@@ -6,6 +6,8 @@ namespace cat_forum.Models
     {
         public String Title { get; set; }
         public String Content { get; set; }
-        public Guid UserId { get; set; }
+        public User? User { get; set; }
+        public Guid? UserId { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }
