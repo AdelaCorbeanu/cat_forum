@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "cat_forum"
+  "defaultProject": "cat_forum",
+  "cli": {
+    "analytics": false
+  }
 }
