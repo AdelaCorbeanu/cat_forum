@@ -1,6 +1,7 @@
 ﻿using cat_forum.Data;
 using cat_forum.Models;
 using cat_forum.Repositories.GenericRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace cat_forum.Repositories.PostRepository
 {
@@ -25,10 +26,12 @@ namespace cat_forum.Repositories.PostRepository
             return _table.FirstOrDefault(x => x.Title.ToLower().Trim().Equals(title.ToLower().Trim()));
         }
 
-        public IEnumerable<ForumPost> GetByUserId (Guid id)
+        public async Task<IEnumerable<ForumPost>> GetByUserIdAsync (Guid id)
         {
-            var userPosts = _table.ToList();
-            return userPosts.Where(x => x.UserId == id);
+            return await _context.ForumPosts
+                .Include(p => p.User)
+                .Where(p => p.UserId == id)
+                .ToListAsync();
         }
     }
 }

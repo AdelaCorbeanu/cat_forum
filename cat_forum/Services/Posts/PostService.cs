@@ -25,7 +25,7 @@ namespace cat_forum.Services.Posts
 
         public IEnumerable<PostDTO> GetPostMappedByUserId (Guid id)
         {
-            IEnumerable<ForumPost> forumPosts = _postRepository.GetByUserId (id);
+            IEnumerable<ForumPost> forumPosts = (IEnumerable<ForumPost>)_postRepository.GetByUserIdAsync (id);
             IEnumerable<PostDTO> postsResult = forumPosts.Select(p => _mapper.Map<PostDTO>(p));
             return postsResult;
         }

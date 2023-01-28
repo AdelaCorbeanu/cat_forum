@@ -10,6 +10,9 @@ namespace cat_forum.Helpers.Mapper
         {
             CreateMap<ForumPost, PostDTO>();
             CreateMap<PostDTO, ForumPost>();
+
+            CreateMap<Comment, CommentDTO>();
+            CreateMap<CommentDTO, Comment>();
         }
     }
 }

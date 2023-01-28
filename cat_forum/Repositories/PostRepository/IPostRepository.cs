@@ -7,6 +7,6 @@ namespace cat_forum.Repositories.PostRepository
     {
         public void OrderByDate ();
         ForumPost GetByTitle (string title);
-        IEnumerable<ForumPost> GetByUserId (Guid id);
+        Task<IEnumerable<ForumPost>> GetByUserIdAsync (Guid id);
     }
 }
