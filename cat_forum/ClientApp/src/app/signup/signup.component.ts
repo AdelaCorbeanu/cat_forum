@@ -15,8 +15,4 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit() {
-    console.log(this.name, this.email, this.password);
-    // Add code to send sign up data to the server
-  }
 }
