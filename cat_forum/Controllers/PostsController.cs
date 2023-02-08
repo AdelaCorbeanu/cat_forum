@@ -1,6 +1,8 @@
 ﻿using cat_forum.Data;
 using cat_forum.Models;
 using cat_forum.Models.DTOs;
+using cat_forum.Services.Comments;
+using cat_forum.Services.Posts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,23 +13,33 @@ namespace cat_forum.Controllers
     [ApiController]
     public class PostsController : ControllerBase
     {
-        private CatForumContext _forumContext;
+        private readonly IPostService _postService;
 
-        public PostsController(CatForumContext forumContext)
+        public PostsController(IPostService postService)
         {
-            _forumContext = forumContext;
+            _postService = postService;
         }
 
+        /*
         [HttpGet]
         public async Task<IActionResult> GetPosts()
         {
-            return Ok(await _forumContext.ForumPosts.ToListAsync());
+            return Ok(await _postService.GetPostMappedByTitle();
         }
+        */
 
         [HttpGet("postById/{id}")]
         public async Task<IActionResult> GetPostById([FromRoute] Guid id)
         {
-            var postById = _forumContext.ForumPosts.FirstOrDefault(x => x.Id == id);
+            var postById = _postService.GetPostMappedByUserId(id);
+
+            return Ok(postById);
+        }
+
+        [HttpGet("postById/{title}")]
+        public async Task<IActionResult> GetPostById(string title)
+        {
+            var postById = _postService.GetPostMappedByTitle(title);
 
             return Ok(postById);
         }
@@ -40,8 +52,8 @@ namespace cat_forum.Controllers
             newPost.Title = postDTO.Title;
             newPost.Content = postDTO.Content;
 
-            await _forumContext.AddAsync(newPost);
-            await _forumContext.SaveChangesAsync();
+            await _postService.AddAsync(newPost);
+            await _postService.SaveChangesAsync();
             return Ok(newPost);
         }
     }
